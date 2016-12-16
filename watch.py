@@ -24,7 +24,6 @@ def on_run(args):
     global can_run
     pir_active_state = (GPIO.HIGH if args.pir_active == True else GPIO.LOW)
     pir_active_px = (GPIO.PUD_DOWN if args.pir_active == True else GPIO.PUD_UP)
-    frame_stack = []
 
     print "Initializing GPIO"
     GPIO.setmode(GPIO.BCM)
