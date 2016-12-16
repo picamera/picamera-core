@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import argparse
-import cv2
 import time
 import threading
 import Queue
@@ -31,8 +30,6 @@ def on_run(args):
     GPIO.setup(args.pir_gpio_num, GPIO.IN, pull_up_down=pir_active_px)
 
     print "Initializing OpenCV"
-    pir_detected = False
-
     grabber_frame_queue = Queue.Queue(10)
     grabber = FrameGrabber(grabber_frame_queue, args.framerate, args.xres, args.yres)
     grabber.start()
@@ -61,7 +58,6 @@ def on_run(args):
     server_runner.stop()
     grabber.stop()
     GPIO.cleanup()
-    cv2.destroyAllWindows()
 
 parser = argparse.ArgumentParser(description="Captures frames from the RPI camera and sends them out a TCP stream.\n")
 parser.add_argument('-framerate', help='Framerate to capture at.', type=int, default=20, required=False)
