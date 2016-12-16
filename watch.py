@@ -35,6 +35,8 @@ def on_run(args):
     grabber.start()
 
     Pyro4.config.COMMTIMEOUT = 1.0
+    Pyro4.config.SERIALIZERS_ACCEPTED = set(['pickle','json', 'marshal', 'serpent'])
+    Pyro4.config.SERIALIZER = 'pickle'
     server = CoreServer()
     server_runner = CoreServerRunner(server, args.bind_addr, args.bind_port, args.debug)
     server_runner.start()
