@@ -5,12 +5,7 @@ import threading
 import cv2
 from picamera.array import PiRGBArray
 from picamera import PiCamera
-
-class Frame(object):
-    def __init__(self, frame, timestamp, fps):
-        self.frame = frame
-        self.timestamp = timestamp
-        self.fps = fps
+from frame import Frame
 
 class FrameGrabber(object):
     def __init__(self, frame_queue, video_rate, xres, yres):

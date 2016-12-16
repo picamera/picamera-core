@@ -8,6 +8,7 @@ import RPi.GPIO as GPIO
 import signal
 import sys
 import Pyro4
+from frame import Frame
 from frame_grabber import FrameGrabber
 from core_server import CoreServer
 from core_server import CoreServerRunner
