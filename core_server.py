@@ -50,7 +50,7 @@ class CoreServerRunner(object):
     def on_run(self):
         print "CoreServer runner starting"
         daemon = Pyro4.Daemon(host=self.bind_addr, port=self.bind_port)
-        uri = daemon.register(self.server)
+        uri = daemon.register(self.server, objectId="core_server")
         print "CoreServer registered: {0}".format(uri)
 
         daemon.requestLoop(loopCondition=self.running)
