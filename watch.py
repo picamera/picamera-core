@@ -10,8 +10,8 @@ import signal
 import sys
 import Pyro4
 from frame_grabber import FrameGrabber
-from core_client import CoreClient
-from core_client import CoreClientRunner
+from core_server import CoreServer
+from core_server import CoreServerRunner
 
 can_run = True
 
@@ -38,27 +38,27 @@ def on_run(args):
     grabber.start()
 
     Pyro4.config.COMMTIMEOUT = 1.0
-    client = CoreClient()
-    client_runner = CoreClientRunner(client, args.bind_addr, args.bind_port, args.debug)
-    client_runner.start()
+    server = CoreServer()
+    server_runner = CoreServerRunner(server, args.bind_addr, args.bind_port, args.debug)
+    server_runner.start()
     signal.signal(signal.SIGINT, signal_handler)
 
     print "Running"
     while can_run:
         # Detected via gpio activation
         if GPIO.input(args.pir_gpio_num) == pir_active_state:
-            client.set_pir_state(True)
+            server.set_pir_state(True)
         else:
-            client.set_pir_state(False)
+            server.set_pir_state(False)
 
         try:
             frame = grabber_frame_queue.get(block=True, timeout=0.01)
-            client.set_frame(frame)
+            server.set_frame(frame)
         except:
             continue
 
     print "Cleaning up"
-    client_runner.stop()
+    server_runner.stop()
     grabber.stop()
     GPIO.cleanup()
     cv2.destroyAllWindows()

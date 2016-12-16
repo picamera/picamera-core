@@ -6,7 +6,7 @@ import Pyro4
 from frame_grabber import Frame
 
 @Pyro4.behavior(instance_mode="single")
-class CoreClient(object):
+class CoreServer(object):
     def __init__(self):
         self.latest_frame = None
         self.pir_state = False
@@ -26,9 +26,9 @@ class CoreClient(object):
         self.pir_state = state
 
 
-class CoreClientRunner(object):
-    def __init__(self, client, bind_addr, bind_port, debug):
-        self.client = client
+class CoreServerRunner(object):
+    def __init__(self, server, bind_addr, bind_port, debug):
+        self.server = server
         self.bind_addr = bind_addr
         self.bind_port = bind_port
         self.debug = debug
@@ -48,14 +48,14 @@ class CoreClientRunner(object):
         return self.can_run
 
     def on_run(self):
-        print "CoreClient runner starting"
+        print "CoreServer runner starting"
         daemon = Pyro4.Daemon(host=self.bind_addr, port=self.bind_port)
-        uri = daemon.register(self.client)
-        print "CoreClient registered: {0}".format(uri)
+        uri = daemon.register(self.server)
+        print "CoreServer registered: {0}".format(uri)
 
         daemon.requestLoop(loopCondition=self.running)
 
-        print "CoreClient runner stopping"
+        print "CoreServer runner stopping"
         daemon.close()
         self.stopped.set()
 
