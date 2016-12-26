@@ -46,7 +46,7 @@ class FrameGrabber(object):
             fps = 1 / diff
 
             try:
-                self.frame_queue.put(Frame(image, now_timestamp, fps), block=True, timeout=0.01)
+                self.frame_queue.put(Frame(image, now_timestamp, self.video_rate, fps, self.xres, self.yres), block=True, timeout=0.001)
             except Exception, e:
                 pass
 
