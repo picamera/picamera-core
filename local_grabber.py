@@ -6,7 +6,7 @@ from picamera.array import PiRGBArray
 from picamera import PiCamera
 from frame import Frame
 
-class FrameGrabber(object):
+class LocalGrabber(object):
     def __init__(self, frame_queue, video_rate, xres, yres):
         self.frame_queue = frame_queue
         self.video_rate = video_rate
