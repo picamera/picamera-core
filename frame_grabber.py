@@ -2,7 +2,6 @@
 
 import time
 import threading
-import cv2
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 from frame import Frame
